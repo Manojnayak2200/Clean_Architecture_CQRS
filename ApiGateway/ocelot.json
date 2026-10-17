@@ -10,7 +10,8 @@
         }
       ],
       "UpstreamPathTemplate": "/auth/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "SwaggerKey": "auth"
     },
     {
       "DownstreamPathTemplate": "/api/employees/{everything}",
@@ -26,7 +27,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      }
+      },
+      "SwaggerKey": "employee"
     },
     {
       "DownstreamPathTemplate": "/api/employees",
@@ -42,7 +44,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      }
+      },
+      "SwaggerKey": "employee"
     },
     {
       "DownstreamPathTemplate": "/api/documents/{everything}",
@@ -58,7 +61,67 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      }
+      },
+      "SwaggerKey": "document"
+    },
+    {
+      "DownstreamPathTemplate": "/api/leaves/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/leaves/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "SwaggerKey": "leave"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "auth",
+      "Config": [
+        {
+          "Name": "1. Auth Service",
+          "Version": "v1",
+          "Url": "https://localhost:7001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "employee",
+      "Config": [
+        {
+          "Name": "2. Employee Service",
+          "Version": "v1",
+          "Url": "https://localhost:7002/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "document",
+      "Config": [
+        {
+          "Name": "3. Document Service",
+          "Version": "v1",
+          "Url": "https://localhost:7003/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "leave",
+      "Config": [
+        {
+          "Name": "4. Leave Service",
+          "Version": "v1",
+          "Url": "https://localhost:7004/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
