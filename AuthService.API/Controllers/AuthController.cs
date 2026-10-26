@@ -1,7 +1,9 @@
 ﻿using AuthService.Application.Auth;
 using AuthService.Application.Auth.Commands;
 using AuthService.Application.Auth.NewFolder;
+using AuthService.Application.Auth.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +50,16 @@ namespace AuthService.API.Controllers
             {
                 return Unauthorized(new { message = ex.Message });
             }
+        }
+
+
+        // GET /api/auth/GetAllUsers
+        [HttpGet("GetAllUsers")]
+        [Authorize(Roles = "Admin")]   // 🟢 Only Admin can call this
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _mediator.Send(new GetAllUsersQuery());
+            return Ok(users);
         }
     }
 }
