@@ -15,6 +15,8 @@ namespace EmployeeService.Application.Employees.Commands
         public string Email { get; set; } = string.Empty;
         public string Department { get; set; } = string.Empty;
         public decimal Salary { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
     }
 
     public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Guid>
@@ -35,7 +37,8 @@ namespace EmployeeService.Application.Employees.Commands
                 Email = request.Email,
                 Department = request.Department,
                 Salary = request.Salary,
-                HiredAt = DateTime.UtcNow
+                HiredAt = DateTime.UtcNow,
+                DateOfBirth=request.DateOfBirth,
             };
 
             _context.Employees.Add(employee);

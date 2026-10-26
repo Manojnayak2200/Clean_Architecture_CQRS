@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AuthService.Application.Auth.Commands;
+using AuthService.API.Middleware;                          // 🟢 NEW
 using AuthService.Domain.Interfaces;
 using AuthService.Infrastructure.Persistence;
 using AuthService.Infrastructure.Security;
@@ -7,8 +8,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;                                             // 🟢 NEW
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ============================================================
+// 0. 🟢 SERILOG (Console + File Logging)
+// ============================================================
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: Path.Combine(AppContext.BaseDirectory, "Logs", "errors-.log"),
+        rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // ============================================================
 // 1. MYSQL
@@ -27,7 +43,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(LoginCommand).Assembly));
 
 // ============================================================
-// 3. 🛡️ JWT AUTHENTICATION (MISSING IN YOUR CODE!)
+// 3. JWT AUTHENTICATION
 // ============================================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -84,11 +100,14 @@ var app = builder.Build();
 // ============================================================
 // 5. MIDDLEWARE PIPELINE
 // ============================================================
+
+// 🟢 FIRST: Global exception handler (MUST be before everything else)
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
-// 🟢 ORDER MATTERS — Authentication BEFORE Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

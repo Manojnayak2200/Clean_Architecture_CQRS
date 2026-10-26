@@ -25,6 +25,7 @@ namespace EmployeeService.Infrastructure.Persistence
                 entity.HasIndex(e => e.Email).IsUnique();
                 entity.Property(e => e.Department).HasMaxLength(50);
                 entity.Property(e => e.Salary).HasPrecision(18, 2);
+                entity.Property(e => e.DateOfBirth).HasColumnType("datetime(6)");
 
                 // 👇 NEW
                 entity.HasIndex(e => e.AuthUserId);

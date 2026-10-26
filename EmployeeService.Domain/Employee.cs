@@ -15,5 +15,7 @@ namespace EmployeeService.Domain
         public decimal Salary { get; set; }
         public DateTime HiredAt { get; set; } = DateTime.UtcNow;
         public Guid? AuthUserId { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
     }
 }

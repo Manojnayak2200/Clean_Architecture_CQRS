@@ -1,21 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Ocelot" Version="23.3.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+  <ItemGroup>
+    <!-- Ocelot + Polly (Circuit Breaker) -->
+    <PackageReference Include="Ocelot" Version="23.3.3" />
+    <PackageReference Include="Ocelot.Provider.Polly" Version="23.3.3" />
+    
+    <!-- Swagger Aggregation -->
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="8.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
-		<PackageReference Include="MMLib.SwaggerForOcelot" Version="8.1.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <!-- JWT Authentication -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
 
-		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
-	</ItemGroup>
+    <!-- Serilog (Log to file) -->
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
+  </ItemGroup>
 
 </Project>

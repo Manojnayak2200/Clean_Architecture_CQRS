@@ -31,6 +31,9 @@ namespace EmployeeService.Infrastructure.Migrations
                     b.Property<Guid?>("AuthUserId")
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Department")
                         .IsRequired()
                         .HasMaxLength(50)
