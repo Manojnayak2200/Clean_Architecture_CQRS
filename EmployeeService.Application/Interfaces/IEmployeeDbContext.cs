@@ -12,5 +12,7 @@ namespace EmployeeService.Application.Interfaces
     {
         DbSet<Employee> Employees { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+
     }
 }

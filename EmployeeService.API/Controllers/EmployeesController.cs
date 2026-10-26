@@ -1,9 +1,12 @@
 ﻿using EmployeeService.Application.Employees.Commands;
 using EmployeeService.Application.Employees.Queries;
+using EmployeeService.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static EmployeeService.Application.Interfaces.IEmployeeDbContext;
 
 // ============================================================
 //  EMPLOYEES CONTROLLER
@@ -17,7 +20,12 @@ namespace EmployeeService.API.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EmployeesController(IMediator mediator) => _mediator = mediator;
+        private readonly IDocumentServiceClient _context;
+        public EmployeesController(IMediator mediator, IDocumentServiceClient context)
+        {
+            _mediator = mediator;
+            _context = context;
+        }
 
         private Guid GetCurrentUserId()
         {
@@ -134,6 +142,17 @@ namespace EmployeeService.API.Controllers
         }
 
         #endregion
+
+
+        [HttpGet("GetMyDOC")]
+        [Authorize]
+        public async Task<IActionResult> GetByUserId()
+        {
+            var docs = await _context.GetDocumentsByUserIdAsync();
+              
+
+            return Ok(docs);
+        }
     }
 
     public class LinkRequest

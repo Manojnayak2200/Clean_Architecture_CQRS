@@ -126,5 +126,9 @@
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7000"
+  },
+  "AuthenticationOptions": {
+    "AuthenticationProviderKey": "Bearer",
+    "AllowedScopes": []
   }
 }
