@@ -108,7 +108,6 @@ namespace EmployeeService.API.Controllers
 
         // POST /api/employees/CreateEmployee
         [HttpPost("CreateEmployee")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateEmployeeCommand command)
         {
             var id = await _mediator.Send(command);
